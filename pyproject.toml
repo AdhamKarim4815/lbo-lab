@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lbo-lab"
+version = "1.0.0"
+description = "Leveraged buyout model: Python engine, CLI and a banker-formatted Excel workbook with live formulas."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Adham Karim" }]
+keywords = ["lbo", "private equity", "finance", "excel", "openpyxl", "xlsxwriter"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Office/Business :: Financial",
+]
+dependencies = [
+    "openpyxl>=3.1",
+    "xlsxwriter>=3.1",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "ruff>=0.4"]
+
+[project.scripts]
+lbo = "lbo_lab.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/adhamkarim4815/lbo-lab"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM"]
+ignore = ["E731", "SIM905"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/lbo_lab/excel.py" = ["E501"]  # long cell text and formula templates
